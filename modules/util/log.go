@@ -27,6 +27,8 @@ func Log() zerolog.Logger {
 			logLevel = int(zerolog.InfoLevel) // default to INFO
 		}
 
+		var gitRevision string
+
 		if os.Getenv("APP_ENV") != "development" {
 			var output io.Writer = zerolog.New(os.Stdout)
 
@@ -35,15 +37,12 @@ func Log() zerolog.Logger {
 				With().
 				Timestamp().
 				Int("pid", os.Getpid()).
-				Str("go_version", runtime.Version()).
 				Logger()
 		} else {
 			var output io.Writer = zerolog.ConsoleWriter{
 				Out:        os.Stdout,
 				TimeFormat: time.RFC3339,
 			}
-
-			var gitRevision string
 
 			buildInfo, ok := debug.ReadBuildInfo()
 			if ok {
@@ -61,10 +60,13 @@ func Log() zerolog.Logger {
 				Timestamp().
 				Caller().
 				Int("pid", os.Getpid()).
-				Str("go_version", runtime.Version()).
-				Str("git_revision", gitRevision).
 				Logger()
 		}
+
+		log.Info().
+			Str("go_version", runtime.Version()).
+			Str("git_revision", gitRevision).
+			Msg("Logger initialized")
 	})
 
 	return log
