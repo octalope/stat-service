@@ -1,0 +1,6 @@
+{
+  "editor.defaultFormatter": "golang.go",
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false // Recommended to prevent VS Code from automatically detecting indentation style
+}
