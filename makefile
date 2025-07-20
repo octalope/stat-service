@@ -23,7 +23,7 @@ run: build
 	@echo "Running $(GO_BINARY_NAME)..."
 	./bin/$(GO_BINARY_NAME)
 
-run-docker: docker
+run-docker: stop-docker docker
 	@echo "Running Docker container for $(GO_BINARY_NAME)..."
 	docker run --name $(GO_BINARY_NAME) --rm -d -p 8080:8080 $(GO_BINARY_NAME)
 
