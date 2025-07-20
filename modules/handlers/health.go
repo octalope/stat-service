@@ -1,22 +1,18 @@
 package handlers
 
 import (
+	"github.com/rs/zerolog"
 	"io"
 	"net/http"
-
-	"github.com/octalope/stat-service/modules/util"
 )
 
 func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
-	log := util.Log()
-	log.Info().
-		Str("verb", r.Method).
-		Str("path", "/health").
-		Msg("request")
+	log := zerolog.Ctx(r.Context())
 
 	if r.Method == http.MethodGet {
 		io.WriteString(w, "OK")
 	} else {
+		log.Error().Msg("Method not allowed")
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}

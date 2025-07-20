@@ -1,6 +1,8 @@
-package util
+package logging
 
 import (
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/pkgerrors"
 	"io"
 	"os"
 	"runtime"
@@ -8,16 +10,13 @@ import (
 	"strconv"
 	"sync"
 	"time"
-
-	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/pkgerrors"
 )
 
 var once sync.Once
 
 var log zerolog.Logger
 
-func Log() zerolog.Logger {
+func Get() zerolog.Logger {
 	once.Do(func() {
 		zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
 		zerolog.TimeFieldFormat = time.RFC3339Nano
