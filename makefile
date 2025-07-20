@@ -1,6 +1,6 @@
 # Define variables
 GO_BINARY_NAME := stat-service
-GO_SOURCE_FILES := $(shell find . -type f -name "*.go" -not -path "./vendor/*")
+GO_SOURCE_FILES := $(shell find . -type f -name "*.go" -not -path "./bin/*")
 
 # Default target
 all: clean build test docker
